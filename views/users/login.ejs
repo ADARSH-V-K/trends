@@ -1,0 +1,104 @@
+<%-include('../layouts/header.ejs')%>
+
+<!-- Section: Design Block -->
+<section class=" text-center text-lg-start">
+    <style>
+      .rounded-t-5 {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+      }
+  
+      @media (min-width: 992px) {
+        .rounded-tr-lg-0 {
+          border-top-right-radius: 0;
+        }
+  
+        .rounded-bl-lg-5 {
+          border-bottom-left-radius: 0.5rem;
+        }
+      }
+    </style>
+    
+    <div class="card mb-3">
+      <div class="row g-0 d-flex align-items-center">
+        <div class="col-lg-4 d-none d-lg-flex">
+          <img src="https://assetscdn1.paytm.com/images/catalog/view_item/409284/1557336782049.jpg?imwidth=1600&impolicy=hq" style="margin-top: 100px;" alt="Trendy Pants and Shoes"
+            class="w-100 rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5" />
+        </div>
+        
+        <div class="col-lg-8">
+          <div class="card-body py-5 px-md-5">
+            
+  
+            <form action="login" method="post" id="login-form">
+              <div>
+                <h2 style="text-align: center;color: rgb(17, 17, 22);margin-bottom: 100PX;">USER LOGIN</h2>
+              </div>
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <!-- <input type="email" id="form2Example1" class="form-control" /> -->
+                <label class="form-label" for="form2Example1">Email address</label>
+                <input type="email" name="email" placeholder="enter email" class="form-control"  >
+      
+              </div>
+  
+              <!-- Password input -->
+              <div class="form-outline mb-4">
+                <!-- <input type="password" id="form2Example2" class="form-control" /> -->
+                <label class="form-label" for="form2Example2">Password</label>
+                <input type="password" name="password" placeholder="enter password"  class="form-control">
+              </div>
+  
+              <!-- 2 column grid layout for inline styling -->
+              <div class="row mb-4">
+                <div class="col d-flex justify-content-center">
+                  <!-- Checkbox -->
+             
+  
+           
+              <!-- Submit button -->
+              <button type="submit" class="btn btn btn-block mb-4" style="background-color: black;color: antiquewhite;">Sign in</button>
+            </form>
+            <script>
+              const form = document.getElementById('login-form');
+              form.addEventListener('submit', (event) => {
+                const email = document.getElementById('email');
+                const password = document.getElementById('password');
+                if (email.value === '' || password.value === '') {
+                  event.preventDefault(); // prevent form submission
+                  alert('Please fill in all fields'); // show error message
+                }
+              });
+            </script>
+
+
+
+          </div>
+          <div>
+            <a href="/password">forgot password</a>
+          </div>
+              <div style="text-align: center;">
+                <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Sign in with otp</button> -->
+              </div>
+              
+         
+          
+          <div style="text-align: center;" >
+            
+          Didn't have an account?
+          <a href="register"> Register Now</a>
+          </div>
+          <%
+          if(typeof message !=='undefined'){
+          %>
+                <p style="color: red;text-align: center;"><%= message %></p>
+         <%
+         }
+           %>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Section: Design Block -->
+  <%- include('../layouts/footer.ejs')%>

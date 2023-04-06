@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<!-- My CSS -->
+	<link rel="stylesheet" href="/admin/style.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" >
+	<!-- Adding jquery cdn -->
+	<script src="https://code.jquery.com/jquery-3.5.1.js">
+		
+	</script>
+	<!-- Adding datatable cdn -->
+	<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+
+	
+
+	
+	<script>
+		$(document).ready(function () {
+      $('#productTable').DataTable();
+        });
+	</script>
+
+	<title>AdminHub</title>
+</head>
+<body>
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">AdminHub</span>
+		</a>
+		<ul class="side-menu top">
+			<li >
+				<a href="adminHome">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li class="'bx bxs-shopping-bag-alt'">
+				<a href="User">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">User Management</span>
+				</a>
+			</li>
+			<li >
+						<a href="product">
+					
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text"> Product</span>
+				</a>
+			</li>
+			<li>
+                <a href="banner">
+            
+            <i class='bx bxs-doughnut-chart' ></i>
+            <span class="text"> Banner</span>
+        </a>
+    </li>
+			<li>
+				<a href="category">
+					
+					<span class="text" style="margin-left: 40px;">categories</span>
+				</a>
+			</li>
+			<li>
+				<a href="getOrder">
+					<i class='bx bxs-group' ></i>
+					<span class="text">Order Management</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li class="active">
+				<a href="#">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Coupon Management</span>
+				</a>
+			</li>
+			<li>
+				<a href="/admin/logout" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>COUPON LIST</h1>
+					<ul class="breadcrumb">
+					
+					</ul>
+				</div>
+				<a href="addCoupons" class="btn-download">
+					<i class='bx bxs-cloud-download' ></i>
+					<span class="text">Add Coupons</span>
+				</a>
+			</div>
+
+		
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+					
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table id="productTable">
+						<thead>
+							<tr>
+								<th>coupon code</th>
+								<th>Discount type</th>
+								<th>Discount</th>
+								<th>MaxDiscount</th>
+                                <th>MinPurchase</th>
+								<th>Expiry Date</th>
+								<th>Delete</th>
+								<th>Edit</th>
+					            
+					            
+								
+							</tr>
+						</thead>
+						<tbody>
+
+							<% 
+							if(couponData.length>0){
+								for(let i=0;i<couponData.length;i++)
+								{
+									%>
+		
+									<tr>
+										<td><%=couponData[i].CouponCode%></td>
+										<td><%=couponData[i].discountType%></td>
+										<td><%=couponData[i].discountAmount%></td>
+										<td><%=couponData[i].maxDiscountAmount%></td>
+										<td><%=couponData[i].minPurchase%></td>
+										<td><%=couponData[i].expiryDate%></td> 
+										<td><button type="button" class="btn btn-danger btn-sm"
+        onclick="confirmDelete('<%=couponData[i]._id%>')">Delete</button>
+</td>
+<td><a href="editCoupon?id=<%=couponData[i]._id%>"><button type="button" class="btn btn-danger btn-sm" >Edit</button></a>
+      
+</td>
+<script>
+    function confirmDelete(couponId) {
+        if (confirm("Are you sure you want to delete this product?")) {
+            window.location.href = "/admin/deleteCoupon?id=" + couponId;
+        }
+    }
+</script>
+			
+				</tr>
+									<%
+								}
+							}else{
+								%>
+								<tr>
+									<td colspan="5">couponData not found</td>
+								</tr>
+								<%
+							}
+							%>
+						</tbody>
+						
+					
+					</table>
+					<div>
+						<div>
+						<%
+						if(typeof message!=='undefined')
+						{
+							%>
+							<p style="color: red;"><%= message %></p>
+							<%
+						}
+						%>
+						</div>
+				</div>
+				
+	<script src="script.js"></script>
+</body>
+</html>

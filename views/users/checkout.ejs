@@ -1,0 +1,373 @@
+
+<%- include('../layouts/header.ejs')%>
+<div class="container">
+    <div class="py-5 text-center">
+<div style="margin-right: 61rem;">
+      <form action="/applyCoupon" method="post"  >
+        <div class="mb-3" >
+          <label for="address2" >Enter Coupon Code<span class="text-muted"></span></label>
+          <input  type="text" name="coupon" class="form-control" id="couponCode" ><br>
+          <input type="hidden" name="id" value="<%=findCart._id %>">
+
+          <button class="btn btn-danger btn-sm btn-block" onclick="couponApply()" type="submit">apply coupon code</button>
+        </div>
+        <P id="message"></P>
+        
+      </form>
+    </div>
+      <h2>Checkout form</h2>
+    </div>
+   
+    <form  action="" id="payment">
+  
+    <div class="row">
+      <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted">Your cart</span>
+          <span class="badge badge-secondary badge-pill">3</span>
+        </h4>
+        <ul class="list-group mb-3">
+          <% for(i=0;i<findCart.product.length;i++){%>
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0"><%=findCart.product[i].name%>x<%= findCart.product[i].quantity %></h6>
+            </div>
+            <span class="text-muted"><%=findCart.product[i].price*findCart.product[i].quantity%></span>
+          </li>
+          <% }%>
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+            <h6 class="my-0" >subtotal </h6>
+          </div>
+          <span class="text-muted" id="subtotal"><%= findCart.totalPrice %></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+            <h6 class="my-0" id="">discount Price </h6>
+          </div>
+          <span class="text-muted" id="discountAmount"><%= findCart.discountAmount %></span>
+          </li>
+          
+          <div class="d-flex my-2 justify-content-between">
+          <h6 class="my-0 ms-3" >TOTAL</h6>
+          <H6 class="me-3" id="total"><%=findCart.totalPrice-findCart.discountPrice%></H6>
+          <input type="hidden" id="totalHidden" name="total" value="<%=findCart.totalPrice-findCart.discountPrice%>">
+          
+          
+        </div>
+          
+        </ul>
+
+      </div>
+    </div>
+ 
+
+       <!-- ------------------ -->
+       <% address.forEach((address, index) => { %>
+        <div>
+      <input type="radio" name="address_id" class="address_id" value="<%= address._id %>" />
+      <div >
+<div class=" a-<%= address._id %>"><%=address.name%></div>
+<div class=" a-<%= address._id %>"><%=address.address%></div>
+<div class=" a-<%= address._id %>"><%=address.city%></div>
+<div class=" a-<%= address._id %>"><%=address.mobile%></div>
+<div class=" a-<%= address._id %>"><%=address.postCode%></div>
+<div class=" a-<%= address._id %>"><%=address.country%></div>
+
+</div>
+</div>
+<% }); %>
+
+
+                <h6 class="checkout__title">Add new address</h6>
+               
+                <div class="col-lg-12">
+                    <div class="checkout__input">
+                        <p>Name<span>*</span></p>
+                        <input required type="text" class="form-control name"placeholder="Name" name="name" />
+                    </div>
+                </div>
+           
+            <div class="checkout__input">
+                <p>House name<span>*</span></p>
+                <input required type="text" class="form-control address"placeholder=" House Name" name="address"  />
+            </div>
+            
+            <div  class="checkout__input">
+                <p>city<span>*</span></p>
+                <input required type="text" class="form-control city"placeholder="city" name="city"  />
+             </div>
+            
+            <div class="checkout__input">
+                
+                <p>mobile number<span>*</span></p>
+                <input required  type="text" class="form-control mobile"placeholder="mobile" name="mobile"  />
+            </div>
+            <div class="checkout__input">
+                <p>Town/City<span>*</span></p>
+                <input required type="text" class="form-control postcode"placeholder="pin" name="postcode" />
+            </div>
+            <div class="checkout__input">
+                <p>State<span>*</span></p>
+                <input  type="text" name="state" class="form-control state"placeholder="Name"  />
+            </div>
+           
+   
+      
+   <!-- <div class="col-md-8 order-md-1"> -->
+       <!-- --------------- -->
+        <!-- <h4 class="mb-3">Billing address</h4>
+  
+          <div class="row">
+            <div class=" mb-3">
+              <label for="firstName"> Name</label>
+              <input type="text" name="name" class="form-control"placeholder="Name"  required>
+             
+            </div>
+          <div class="mb-3">
+            <label for="address">Address</label>
+            <input type="text" name="address" class="form-control" id="address" required>
+            <div class="invalid-feedback">
+              Please enter your shipping address.
+            </div>
+          </div>
+  
+        
+  
+          <div class="row">
+           
+            <div class="mb-3">
+              <label for="address2">COUNTRY<span class="text-muted"></span></label>
+              <input type="text" name="country" class="form-control" id="address2" >
+            </div>
+            <div class="mb-3">
+              <label for="address2">State<span class="text-muted"></span></label>
+              <input type="text" name="state" class="form-control" id="address2" >
+            </div>
+            <div class="mb-3">
+                <label for="address2">CITY<span class="text-muted"></span></label>
+                <input type="text" name="city" class="form-control" id="address2" >
+              </div>
+              <div class="mb-3">
+                <label for="address2">PIN CODE<span class="text-muted"></span></label>
+                <input type="text" name="postcode" class="form-control" id="address2" >
+              </div>
+              <div class="mb-3">
+                <label for="address2">PHONE NUMBER<span class="text-muted"></span></label>
+                <input type="text" name="number" class="form-control" id="address2" >
+              </div>
+          
+          </div>
+          
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="same-address">
+            <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="save-info">
+            <label class="custom-control-label" for="save-info">Save this information for next time</label>
+          </div> -->
+          
+  
+          <h4 class="mb-3">Payment</h4>
+  
+          <div class="d-block my-3">
+            <div class="custom-control custom-radio">
+              <input id="credit" name="paymentMethod" type="radio" value="COD" class="custom-control-input" required>
+              <label class="custom-control-label"  for="credit">Cash on Delivery</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="debit" name="paymentMethod" type="radio" value="Razor-Pay" class="custom-control-input" required>
+              <label class="custom-control-label"  for="debit">Razor Pay</label>
+            </div>
+         
+          </div>
+          
+          <button class="btn btn-primary btn-lg btn-block" type="submit" >Continue to checkout</button>
+        
+      </form>
+
+        <div class="d-flex mt-3">
+       <a href="/getCart" ><button class="btn btn-dark btn-lg btn-block" >back</button></a>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+  
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+      <p class="mb-1">&copy; 2017-2019 Company Name</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="#">Privacy</a></li>
+        <li class="list-inline-item"><a href="#">Terms</a></li>
+        <li class="list-inline-item"><a href="#">Support</a></li>
+      </ul>
+    </footer>
+  </div>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script>
+
+function couponApply(){
+  event.preventDefault()
+  const code = document.getElementById('couponCode').value
+  $.ajax({
+    url:'/applyCoupon',
+    data:{
+      code:code
+    },
+    method:'post',
+    success:(jsonresponse)=>{
+        
+        if(jsonresponse.data=='applied'){
+    document.getElementById('message').innerHTML=jsonresponse.message
+    document.getElementById('subtotal').innerHTML=jsonresponse.updatedCart.totalPrice
+    document.getElementById('discountAmount').innerHTML=jsonresponse.updatedCart.discountPrice
+   
+    document.getElementById('total').innerHTML = jsonresponse.updatedCart.totalPrice - jsonresponse.updatedCart.discountPrice
+    document.getElementById('totalHidden').value = jsonresponse.updatedCart.totalPrice - jsonresponse.updatedCart.discountPrice
+
+
+
+
+        }else if (jsonresponse.data=='minimumAmount'){
+            document.getElementById('message').innerHTML=jsonresponse.message
+        }else if(jsonresponse.data=='invalid'){
+            document.getElementById('message').innerHTML=jsonresponse.message
+        }
+
+    }
+  })
+}
+
+function razorpay(order){
+  
+    var options = {
+        "key": "rzp_test_XuMLdJaiFzahLX", 
+        "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Trends", //your business name
+        "description": "Test Transaction",
+        // "image": "https://example.com/your_logo",
+        "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        // "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+        "handler":function(response){
+            verifyPayment(response,order)
+        }
+        
+       ,
+        "prefill": {
+            "name": "Gaurav Kumar", //your customer's name
+            "email": "gaurav.kumar@example.com",
+            "contact": "9000090000"
+        },
+        "notes": {
+            "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+ 
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+      
+    
+    }
+
+
+   $('#payment').submit((e)=>{
+        e.preventDefault()
+        
+        $.ajax({
+            url:'/orderPlaced',
+            data:$('#payment').serialize(),
+            method:'post',
+            success:(response)=>{
+                if(response.status){
+                    
+                    location.href='orderSuccess'
+                }else {
+                    
+                    razorpay(response.order)
+                   
+                    
+                }
+            }
+
+
+        })
+    })
+
+function verifyPayment(payment,order){
+    $.ajax({
+      url:'/verify-payment',
+      data:{
+        payment,
+        order
+      },
+      method:'post',
+      success:(response)=>{
+        if(response.success){
+            
+            location.href='orderSuccess'
+        }else if(response.paymentFailed){
+
+            alert('payment failed')
+        }
+      }
+      
+
+    })
+}
+const addressRadio = document.querySelectorAll('.address_id')
+const nameInput = document.querySelector('.name')
+const addressInput = document.querySelector('.address')
+const localityInput = document.querySelector('.city')
+const phoneNumberInput = document.querySelector('.mobile')
+const pinCodeInput = document.querySelector('.postcode')
+
+
+const stateInput = document.querySelector('.state')
+
+addressRadio.forEach((address)=>{
+    address.addEventListener('change',(event)=>{
+    const addressId = event.target.value
+   
+    const elements = document.querySelectorAll('.a-'+addressId)  
+        
+    elements.forEach((element,index)=>{
+        if(index === 0){
+         
+            nameInput.value = element.textContent
+        }else if(index === 1){
+          addressInput.value = element.textContent
+            
+        }else if (index ===2){
+          localityInput.value = element.textContent
+         
+        }else if(index === 3){
+           
+          phoneNumberInput.value = element.textContent
+        }else if(index ===4){
+            
+          pinCodeInput.value = element.textContent
+        }else if(index === 5){
+            stateInput.value = element.textContent
+        }
+    })
+    
+    
+})
+})
+  </script>
+  
+  <%- include('../layouts/footer.ejs')%>
+
+
+
+
+
+
+
+  

@@ -1,0 +1,282 @@
+const addCart = async (req, res) => {
+    try {
+        const productId = req.query.id;
+    const quantity = req.body.quantity || 1;
+    const userIn = req.session.user_id;
+    const productData = await products.findOne({ _id: productId })
+    const name = productData.name;
+    const price = productData.price;
+    console.log(productData.name)
+        
+        if (userIn) {
+            const cartIn = await cart.findOne({ user: userIn });
+            if (cartIn) {
+                const productIndex = cartIn.product.findIndex(
+                    (p) => p.productId == productId
+                );
+                if (productIndex !== -1) {
+                    const updateResult = await cart.updateOne(
+                        { user: userIn, "product.productId": productId },
+                        { $inc: { "product.$.quantity": quantity } }
+                    );
+                } else {
+                    console.log('reached ')
+                    console.log(productData.name,'@reached')
+                    const cartUpdate = await cart.updateOne({ User: userIn },
+                        { $push: { product: { productId, quantity,price} } }
+                        
+                    );
+                }
+            } else {
+                console.log('reached here')
+                console.log(productData,'it is it')
+                const Cart = new cart({
+                    product: [{ productId, quantity, price,name}],
+                    user: userIn
+                });
+                const cartData = await Cart.save();
+            }
+            res.redirect('/cart')
+
+        } else {
+            res.redirect("/login");
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+    
+};
+////////////////////////////////////////////////////////////////////////////////////////
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>aranaz</title>
+<link rel="icon" href="img/favicon.png">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- animate CSS -->
+<link rel="stylesheet" href="css/animate.css">
+<!-- owl carousel CSS -->
+<link rel="stylesheet" href="css/owl.carousel.min.css">
+<!-- nice select CSS -->
+<link rel="stylesheet" href="css/nice-select.css">
+<!-- font awesome CSS -->
+<link rel="stylesheet" href="css/all.css">
+<!-- flaticon CSS -->
+<link rel="stylesheet" href="css/flaticon.css">
+<link rel="stylesheet" href="css/themify-icons.css">
+<!-- font awesome CSS -->
+<link rel="stylesheet" href="css/magnific-popup.css">
+<!-- swiper CSS -->
+<link rel="stylesheet" href="css/slick.css">
+<link rel="stylesheet" href="css/price_rangs.css">
+<!-- style CSS -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<!--::header part start::-->
+<header class="main_menu home_menu">
+  <div class="container-fluid" style="border-bottom: solid 2px; background-color: #ff3368;">
+      <div class="row align-items-center">
+          <div class="col-lg-12">
+              <nav class="navbar navbar-expand-lg navbar-light">
+                  <a class="navbar-brand" href="index.html"> <img src="img/logo.png" alt="logo"> </a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse"
+                      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                      aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="menu_icon"><i class="fas fa-bars"></i></span>
+                  </button>
+
+                  <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                      <ul class="navbar-nav">
+                          <li class="nav-item">
+                              <a class="nav-link" href="index.html">Home</a>
+                          </li>
+                          <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_1"
+                                  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Shop
+                              </a>
+                              <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                                  <a class="dropdown-item" href="category.html"> shop category</a>
+                                  <a class="dropdown-item" href="single-product.html">product details</a>
+                                  
+                              </div>
+                          </li>
+                          <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_3"
+                                  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  pages
+                              </a>
+                              <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+                                  <a class="dropdown-item" href="login.html"> login</a>
+                                  <a class="dropdown-item" href="tracking.html">tracking</a>
+                                  <a class="dropdown-item" href="checkout.html">product checkout</a>
+                                  <a class="dropdown-item" href="cart.html">shopping cart</a>
+                                  <a class="dropdown-item" href="confirmation.html">confirmation</a>
+                                  <a class="dropdown-item" href="elements.html">elements</a>
+                              </div>
+                          </li>
+                          <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown_2"
+                                  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  blog
+                              </a>
+                              <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+                                  <a class="dropdown-item" href="blog.html"> blog</a>
+                                  <a class="dropdown-item" href="single-blog.html">Single blog</a>
+                              </div>
+                          </li>
+                          
+                          <li class="nav-item">
+                              <a class="nav-link" href="contact.html">Contact</a>
+                          </li>
+                      </ul>
+                  </div>
+                  <div class="hearer_icon d-flex">
+                      <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
+                      <a href=""><i class="ti-heart"></i></a>
+                      <div class="dropdown cart">
+                          <a class="dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-cart-plus"></i>
+                          </a>
+                      
+                          
+                      </div>
+                  </div>
+              </nav>
+          </div>
+      </div>
+  </div>
+
+</header>
+<% if(count != 0){ %>
+  <!-- Shopping Cart Section Begin -->
+  <section class="shopping-cart spad"   style="margin-top: 140px;">
+    <div class="container">
+      <div class="cart_inner">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+                       <% let totalPrice = 0 %>
+
+                       <% for(i=0;i<products.length;i++) { %>
+                          <% if(products[i].available== 0){ %>
+                          <tbody>
+                              <tr>
+                                  <td width=" 170px">
+                                    <div class="media">
+                                      <div class="d-flex">
+                                        <img height="100px" src="/prodectImages/<%=products[i].image[0]%>" >
+                                      </div>
+                                     
+                                    </div>
+                                  </td> 
+                                  <td> <div class="media-body">
+                                    <h6><%=products[i].name %></h6>
+                                  </div></td> 
+                                  <td>
+                                    <h5><%=products[i].price %> </h5>
+                                  </td>
+                                  <td>
+                                    <div class="product_count">
+                                      <span class="input-number-decrement"> <i class="ti-angle-down"></i></span>
+                                      <input class="input-number" type="text" value=" <%= cartProducts[i].quantity %>" min="0" max="10">
+                                      <span class="input-number-increment"> <i class="ti-angle-up"></i></span>
+                                    </div>
+                                  </td>
+                                  <td style="color: red;font-size: large;font-weight: bold;">
+                                  ₹<%=cartProducts[i].quantity * products[i].price   %> 
+                                  </td>
+                                  <td width="500px"style="    padding-left: 210px;">
+                                    <div  class="" >
+                                      <div class="" >
+                                          <h6 style="color: #ff3368;">Discount codes</h6>
+                                          <form action="#">
+                                              <input type="text" placeholder="Coupon code" width="300px"height="60px" style="    height: 38px;">
+                                              <button type="button" class="btn btn-danger">APPLY</button>
+                                          </form>
+                                      </div>
+                                      <div class=""  >
+                                          <h6 style="color: #ff3368;">Cart total</h6>
+                                          <ul style="color: #ff3368;">
+                                              
+                                              <li>Total <span>₹<%=cartProducts[i].quantity * products[i].price   %> 
+                                              </span></li>
+                                          </ul>
+                                          <a  href="/checkout?id=<%=products[i]._id %>" class="primary-btn"><button type="button" class="btn btn-success">proceed to checkout</button></a>
+                                      </div>
+                                      
+                                  </div> 
+                                  </td>
+                              </tr>
+                          </tbody>
+                          <% } %>
+                          <% } %>
+                      </table>
+                  </div>
+              </div>
+   
+          </div>
+      </div>
+  </section>
+ 
+  
+   <% }else { %>
+      <div class="container-fluid  ">
+          <div class="row">
+             <div class="col-md-12">
+                     <div class="card">
+                        <div class="card-body cart">
+                         <div class="col-sm-12 empty-cart-cls text-center">
+                             <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+                             <h3><strong>Your Cart is Empty</strong></h3>
+                             <h4>Add something to make me happy :)</h4>
+                             <a href="shop" class="btn btn-dark cart-btn-transform m-3" data-abc="true">continue shopping</a>
+                         </div>
+                    </div>
+                </div>
+         </div>       
+     </div>           
+</div>
+      <% } %>
+  
+<script src="js/jquery-1.12.1.min.js"></script>
+<!-- popper js -->
+<script src="js/popper.min.js"></script>
+<!-- bootstrap js -->
+<script src="js/bootstrap.min.js"></script>
+<!-- easing js -->
+<script src="js/jquery.magnific-popup.js"></script>
+<!-- swiper js -->
+<script src="js/swiper.min.js"></script>
+<!-- swiper js -->
+<script src="js/masonry.pkgd.js"></script>
+<!-- particles js -->
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<!-- slick js -->
+<script src="js/slick.min.js"></script>
+<script src="js/jquery.counterup.min.js"></script>
+<script src="js/waypoints.min.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/jquery.form.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/mail-script.js"></script>
+<script src="js/stellar.js"></script>
+<script src="js/price_rangs.js"></script>
+<!-- custom js -->
+<script src="js/custom.js"></script>
+</body>
+
+</html>
