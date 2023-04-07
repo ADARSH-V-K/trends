@@ -1,8 +1,8 @@
 
 const mongoose=require("mongoose")
 mongoose.set('strictQuery', false);
-mongoose.connect("mongodb://127.0.0.1:27017/E_COMMERCE_WEBSITE_TRENDS")
-
+// mongoose.connect("mongodb://127.0.0.1:27017/E_COMMERCE_WEBSITE_TRENDS")
+mongoose.connect("mongodb+srv://adarsh:user@trends.nuj4lhe.mongodb.net/E_COMMERCE_WEBSITE_TRENDS?retryWrites=true&w=majority")
 const express=require("express")
 const path=require('path')
 //client.logLevel = 'debug';
