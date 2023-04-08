@@ -15,8 +15,9 @@ const {
 const otpGenerator = require("otp-generator");
 const coupon = require("../models/coupon");
 const Razorpay = require('razorpay');
-const { log } = require("console");
+const { log, Console } = require("console");
 const order = require("../models/order");
+const banner = require('../models/banner')
 const securePassword = async (password) => {
     try {
         const passwordHash = await bcrypt.hash(password, 10);
@@ -181,16 +182,21 @@ const verifyLogin = async (req, res) => {
 
 const getHome = async (req, res) => {
     try {
+
         if (req.session.user_id) {
             const userData = await User.findOne({ _id: req.session.user_id });
             const productData = await products.find({});
-            res.render("home", { productData, userData });
+             const bannerData=await banner.find({})
+            
+            
+            res.render("home", { productData,userData,bannerData});
             
         } else {
             
             const productData = await products.find({});
-            
-            res.render("home", { productData});
+             const bannerData=await banner.find({})
+            res.render("home", { productData,bannerData});
+           
         }
     } catch (error) {
         console.log(error.message);
@@ -425,7 +431,7 @@ const getCart = async (req, res) => {
             }
 
             else {
-                res.redirect('/login')
+                res.render('cart', { Products, cartProducts, count,userCart })
         
             }
         }

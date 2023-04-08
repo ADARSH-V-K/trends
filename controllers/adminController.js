@@ -153,22 +153,12 @@ const addBanner=async(req,res)=>{
 
 const insertBanner = async (req, res) => {
     try { 
-        let files = []
-        const imageUpload = await (function () {
-            for (let i = 0; i < req.files.length; i++) {
-                files[i] = req.files[i].filename
-            }
-            return files
-        })()
-
-        
-       
         const Banner = await new banner({
 
             name: req.body.name,
             description: req.body.description,
             category: req.body.category,
-            image: imageUpload,
+            image: req.file.filename,
           
         })
         
@@ -192,10 +182,6 @@ const getProduct = async (req, res) => {
         if (req.query.page) {
             page = req.query.page
         }
-
-
-        // const product = await Product.find({}).populate('category')
-
         const productData = await Product.find({}).populate('category')
 
         res.render('Product', { productData })
@@ -373,6 +359,20 @@ const deleteItem = async (req, res) => {
             res.redirect('/admin/product')
         }
 
+    } catch (error) {
+        res.render('errorPage')
+
+        console.log(error.message)
+    }
+}
+const deleteBanner = async (req, res) => {
+    try {
+        const id = req.query.id;
+        // const bannerData = await banner.findById({ _id: id })
+
+                    const remove = await banner.findByIdAndDelete({ _id: id })
+            res.redirect('/admin/banner')
+            
     } catch (error) {
         res.render('errorPage')
 
@@ -645,6 +645,7 @@ module.exports = {
     exportSales,
     addBanner,
     insertBanner,
-    getBanner
+    getBanner,
+    deleteBanner
 
 }
