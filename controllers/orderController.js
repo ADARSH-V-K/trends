@@ -108,9 +108,9 @@ const orderCreating = async (req, res) => {
       } else if (req.body.paymentMethod  === 'Razor-Pay') {
         
         
-        var instance = new Razorpay({key_id:'rzp_test_XuMLdJaiFzahLX', key_secret:'FryaTv9iDR7T3BvbNlpZyU9W'})
+        let instance = new Razorpay({key_id:'rzp_test_XuMLdJaiFzahLX', key_secret:'FryaTv9iDR7T3BvbNlpZyU9W'})
   
-        var options = {
+        let options = {
           amount: orderData.totalPrice*100,  // amount in the smallest currency unit
           currency: "INR",
           receipt: ''+orderData._id

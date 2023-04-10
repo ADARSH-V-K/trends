@@ -13,8 +13,7 @@ app.use(function(req,res,next){
     res.set('cache-control','no-store')
     next()
 })
-// const morgan = require('morgan');
-// app.use(morgan('dev'));
+
 
 //error handling
 const errorHandler = require('./errorHandler')

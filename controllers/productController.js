@@ -41,7 +41,7 @@ const getShop = async (req, res) => {
         }
 
         const limit = 8;
-        var page = 1;
+        let page = 1;
         if (req.query.page) {
             page = req.query.page;
         }

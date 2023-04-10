@@ -34,8 +34,7 @@ const loadRegister = async (req, res) => {
         console.log(error.message);
     }
 };
-
-var otp;
+let otp;
 const sendVerifyOtpMail = async (name, email, user_id) => {
     try {
         otp = otpGenerator.generate(4, { digits: true, specialChars: false });

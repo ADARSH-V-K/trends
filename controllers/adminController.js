@@ -100,7 +100,7 @@ const LoadLogout = async (req, res) => {
         console.log(error.message)
     }
 }
-const blockUser = async (req, res) => {
+const blockAndUnblockUser = async (req, res) => {
     try {
         const userId = req.query.id
         const userData = await User.findById({ _id: userId })
@@ -618,7 +618,7 @@ module.exports = {
     verifyLogin,
     LoadUser,
     LoadLogout,
-    blockUser,
+    blockAndUnblockUser,
     getProduct,
     loadAdminHome,
     addProduct,
