@@ -13,10 +13,10 @@
               <input type="hidden" name="id" value="<%= productData._id %>">
   
               <label for="" class="mt-4">Description</label>
-              <input type="text"name="description"class="form-control" value="<%= productData.description %>"  pattern="\S+" required >
+              <input type="text"name="description"class="form-control" value="<%= productData.description %>"  required >
   
               <label for="" class="mt-4">Price</label>
-              <input type="text"name="price"class="form-control" value="<%= productData.price %>"  pattern="\S+" required >
+              <input type="text"name="price"class="form-control" value="<%= productData.price %>"  required >
 
               <label for="" class="mt-4">Stock</label>
               <input type="text"name="stock"class="form-control" value="<%= productData.stock %>" >
@@ -28,10 +28,11 @@
                 <% for(let res of categoryData){ %>
                 <option value="<%=res._id%>"><%=res.name%></option>
                 <% } %>
-              </select> 
-               
+              </select>  
               <label for="" class="mt-4">Image</label>
-              <input type="file" name="image" accept="image/png,image/jpeg" class="form-control"multiple >   
+<input type="file" name="image" accept="image/png,image/jpeg" class="form-control" multiple> 
+<img src="trendimages/<%= productData.image %>" alt="Current Product Image" class="mt-3" style="max-width: 200px;">
+
                
   
               <input type="submit" value="Submit" class="btn btn-success mt-4">
@@ -39,5 +40,7 @@
       </div>
      </div>   
   </div>
-  </section>
+
+ 
+     </section>
 <%- include("../layouts/footer.ejs") %>

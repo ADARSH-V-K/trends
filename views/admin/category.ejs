@@ -10,6 +10,7 @@
 	<!-- My CSS -->
 	<link rel="stylesheet" href="/admin/style.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" >
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
 	<!-- Adding jquery cdn -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js">
 	</script>
@@ -146,12 +147,27 @@
   <td>  <button type="button" class="btn btn-danger btn-sm"
         onclick="confirmDelete('<%=categoryData[i]._id%>')">Delete</button>
 </td>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
 
 <script>
     function confirmDelete(categoryId) {
-        if (confirm("Are you sure you want to delete this category?")) {
-            window.location.href = "/admin/deleteCategory?id=" + categoryId;
-        }
+        // if (confirm("Are you sure you want to delete this category?")) {
+        //     
+        // }
+
+		Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = "/admin/deleteCategory?id=" + categoryId;
+  }
+})
     }
 </script>
 

@@ -69,6 +69,9 @@ const userSchema = new mongoose.Schema({
             }
         }
 
-    ]
+    ],
+    wallet:{
+        type:Number
+    }
 })
 module.exports=mongoose.model('User',userSchema)
