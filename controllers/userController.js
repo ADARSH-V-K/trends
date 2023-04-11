@@ -212,6 +212,8 @@ const addCart = async (req, res) => {
             let price = data.price
             const cartCheck = await cart.findOne({ user: userId })
 
+if(data.stock>0)
+{
             if (cartCheck) {
 
                 const Cart = await cart.findOne({ user: userId })
@@ -243,7 +245,12 @@ const addCart = async (req, res) => {
                 const save = Cart.save();
                 res.redirect('/getCart')
             }
-        } else {
+        
+        } else{
+res.render('out')
+        }}
+        
+        else {
             res.redirect('/login')
         }
     } catch (error) {
@@ -255,6 +262,7 @@ const addCart = async (req, res) => {
 const minusCart = async (req, res) => {
     try {
         const sessionCheck = req.session.user_id;
+        
         if (sessionCheck) {
 
             const userId = req.session.user_id;
@@ -264,6 +272,8 @@ const minusCart = async (req, res) => {
             let name = data.name;
             let price = data.price
             const cartCheck = await cart.findOne({ user: userId })
+            if(data.stock>0)
+            {
             if (cartCheck) {
                 const Cart = await cart.findOne({ user: userId })
 
@@ -296,7 +306,9 @@ const minusCart = async (req, res) => {
                 const save = Cart.save();
                 res.redirect('/getCart')
             }
-        } else {
+        }else{
+            res.render('404')
+        } }else {
             res.redirect('/login')
         }
     } catch (error) {
@@ -314,6 +326,7 @@ const getCart = async (req, res) => {
         if (userData) {
 
             const userCart = await cart.findOne({ user: req.session.user_id })
+            const cartProducts = userCart.product
             let count = 0
             if (userCart) {
                 const cartProducts = userCart.product

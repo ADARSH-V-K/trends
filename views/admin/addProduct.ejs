@@ -15,6 +15,12 @@
   
   }
   </style>
+  <head>
+    <!-- Other head tag contents -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+  </head>
+  
 <section>
   <div class="container mt-4">
     <div class="row">
@@ -24,6 +30,7 @@
           action="/admin/addProduct"
           method="post"
           enctype="multipart/form-data"
+          onsubmit="return validateForm()"
         >
           <!-- enctype="multipart/form-data"  -->
 
@@ -42,6 +49,7 @@
             name="description"
             class="form-control"
             placeholder="Description"
+            
           />
 
           <label for="" class="mt-4">Price</label>
@@ -50,14 +58,17 @@
             name="price"
             class="form-control"
             placeholder="Price"
+            
           />
 
           <label for="" class="mt-4">Stock</label>
           <input
+          id="quantity"
             type="text"
             name="stock"
             class="form-control"
             placeholder="Stock"
+            
           />
 
           <label for="" class="mt-4">Select Category</label>
@@ -110,7 +121,43 @@
       reader.readAsDataURL(file);
     }
   });
+  function validateForm() {
+  // Get the input fields
+  const nameInput = document.getElementsByName('name')[0];
+  const descriptionInput = document.getElementsByName('description')[0];
+  const priceInput = document.getElementsByName('price')[0];
+  const stockInput = document.getElementsByName('stock')[0];
 
+  // Trim the input values and check for empty strings
+  if (
+    nameInput.value.trim() === '' ||
+    descriptionInput.value.trim() === '' ||
+    priceInput.value.trim() === '' ||
+    stockInput.value.trim() === ''
+  ) {
+    // If any of the input fields are empty, alert the user and prevent form submission
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Please fill out all the fields',
+    });
+    return false;
+  }
+
+  // Check if the stock value is negative
+  if (parseFloat(stockInput.value) < 0) {
+    // If the stock value is negative, alert the user and prevent form submission
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Stock cannot be negative',
+    });
+    return false;
+  }
+
+  // If all checks pass, allow form submission
+  return true;
+}
  </script>
 
 <%- include("../layouts/footer.ejs") %>

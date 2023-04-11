@@ -162,6 +162,7 @@
 					</div>
 				</li>
 			</ul>
+		
 
 			<ul class="main-menu-m">
 				<li>
@@ -346,7 +347,7 @@
 										</div>
 									</td>
 									<td class="column-2"><%=Products[i].name%></td>
-									<td class="column-3"><%=Products[i].price%></td>
+									<td class="column-3">&#x20b9;<%=Products[i].price%></td>
 									
 
 									
@@ -373,7 +374,7 @@
 										</a>
 											
 										</div> </td>
-										<td class="column-5"><%=Products[i].price*cartProducts[i].quantity%></td>
+										<td class="column-5">&#x20b9;<%=Products[i].price*cartProducts[i].quantity%></td>
 									</td>
 									<% count +=(Products[i].price*cartProducts[i].quantity)%>
 									<td class="column-6">  <a href="/removeCart?id=<%=Products[i]._id%>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
@@ -408,16 +409,14 @@
 						</h4>
 
 						<div class="flex-w flex-t bor12 p-b-13">
-							<div class="size-208">
+							<div class="">
 								<span class="stext-110 cl2">
 									<% 
                                 
                                     for(let i=0;i<Products.length;i++)
                                     {
                                         %>
-									<%=Products[i].name%>
-									X
-									<%=cartProducts[i].quantity%>
+									<%=Products[i].name%> x <%=cartProducts[i].quantity%> <br>
 
 									<%}%>
 								</span>
@@ -483,6 +482,8 @@
 
 							<div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
+									 &#x20b9;
+
 								<%= userCart.totalPrice %>
 								
 								</span>
