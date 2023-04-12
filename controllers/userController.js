@@ -219,7 +219,7 @@ const addCart = async (req, res) => {
                 checkqty = req.query.qty;
             }
 
-            if (data.stock >= checkqty) {
+            if (data.stock > checkqty) {
                 if (cartCheck) {
                     const Cart = await cart.findOne({ user: userId });
                     const totalPrice = Cart.totalPrice + price;
