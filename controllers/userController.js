@@ -6,6 +6,8 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const RandomString = require("randomstring");
 const config = require("../config/config");
+
+
 const { updateOne, findOne, count } = require("../models/userModel");
 const {
     ChallengeContext,
@@ -200,6 +202,7 @@ const getHome = async (req, res) => {
         res.render('404')
     }
 };
+
 const addCart = async (req, res) => {
     try {
         const sessionCheck = req.session.user_id;
@@ -209,56 +212,58 @@ const addCart = async (req, res) => {
             const data = await products.findOne({ _id: productId })
             let quantity = 1;
             let name = data.name;
-            let price = data.price
+            let price = data.price;
             const cartCheck = await cart.findOne({ user: userId })
+            let checkqty = quantity;
+            if (req.query.qty) {
+                checkqty = req.query.qty;
+            }
 
-if(data.stock>0)
-{
-            if (cartCheck) {
-
-                const Cart = await cart.findOne({ user: userId })
-
-                const totalPrice = Cart.totalPrice + price
-                let itemIndex = cartCheck.product.findIndex(p => p.productId == productId);
-                if (itemIndex > -1) {
-                    const updateResult = await cart.updateOne(
-                        { user: userId, "product.productId": productId },
-                        { $inc: { "product.$.quantity": quantity } },
-                    );
-
-                    const insert = await cart.updateOne({ user: userId }, { $set: { totalPrice: totalPrice } })
-                    res.redirect('/getCart')
+            if (data.stock >= checkqty) {
+                if (cartCheck) {
+                    const Cart = await cart.findOne({ user: userId });
+                    const totalPrice = Cart.totalPrice + price;
+                    let itemIndex = cartCheck.product.findIndex(p => p.productId == productId);
+                    if (itemIndex > -1) {
+                        const updateResult = await cart.updateOne(
+                            { user: userId, "product.productId": productId },
+                            { $inc: { "product.$.quantity": quantity } },
+                        );
+                        const insert = await cart.updateOne({ user: userId }, { $set: { totalPrice: totalPrice } })
+                        res.redirect('/getCart')
+                    } else {
+                        const insert = await cart.updateOne({ user: userId }, { $push: { product: [{ productId, quantity, name, price }] } })
+                        const insert2 = await cart.updateOne({ user: userId }, { $set: { totalPrice: totalPrice } })
+                        res.redirect('/getCart')
+                    }
                 } else {
-
-                    const insert = await cart.updateOne({ user: userId }, { $push: { product: [{ productId, quantity, name, price }] } })
-                    const insert2 = await cart.updateOne({ user: userId }, { $set: { totalPrice: totalPrice } })
+                    const Cart = new cart({
+                        product: [{ productId, quantity, name, price }],
+                        totalPrice: price,
+                        user: userId
+                    })
+                    const save = Cart.save();
                     res.redirect('/getCart')
                 }
-                // -----------------
             } else {
-                const Cart = new cart({
-                    product: [{ productId, quantity, name, price }],
-                    totalPrice: price,
-                    user: userId
-                })
+                // Show the sweet alert when the product is out of stock
+               
+                res.redirect('/getCart?message=this+product+is+out+of+stock');
+
                 
-                const save = Cart.save();
-                res.redirect('/getCart')
             }
-        
-        } else{
-res.render('out')
-        }}
-        
-        else {
+        } else {
             res.redirect('/login')
         }
     } catch (error) {
         console.log(error.message);
         res.render('404')
-
     }
 }
+
+
+//original
+
 const minusCart = async (req, res) => {
     try {
         const sessionCheck = req.session.user_id;
@@ -320,15 +325,17 @@ const minusCart = async (req, res) => {
 
 const getCart = async (req, res) => {
     try {
+        
 
         const userData = await User.findOne({ _id: req.session.user_id })
 
         if (userData) {
 
             const userCart = await cart.findOne({ user: req.session.user_id })
-            const cartProducts = userCart.product
+            
             let count = 0
             if (userCart) {
+              let message=req.query.message
                 const cartProducts = userCart.product
 
                 const userCartProductsId = cartProducts.map(values => values.productId)
@@ -351,16 +358,15 @@ const getCart = async (req, res) => {
                 
                 if (products.length > 0) {
 
-                    res.render('cart', { Products, cartProducts, count,userCart })
+                    res.render('cart', { Products, cartProducts, count,userCart,message })
 
                 } else {
-                    res.render('cart', { count, userData,userCart })
+                    res.render('cart', { count, userData,userCart,message })
                 }
             }
 
             else {
-                res.render('cart', { Products, cartProducts, count,userCart })
-        
+                res.render('cart', {   count,userCart,message })
             }
         }
         else {
@@ -368,6 +374,7 @@ const getCart = async (req, res) => {
             res.redirect('/login')
         } 
     } catch (error) {
+
         console.log('cart page error', error.message)
         res.render('404')
 

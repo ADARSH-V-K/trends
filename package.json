@@ -31,6 +31,7 @@
     "randomstring": "^1.2.3",
     "razorpay": "^2.8.6",
     "string": "^3.3.3",
+    "sweetalert2": "^11.7.3",
     "twilio": "^3.84.1"
   }
 }
