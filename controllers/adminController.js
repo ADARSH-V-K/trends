@@ -10,7 +10,6 @@ const { set } = require('../routes/userRoute')
 const coupon = require('../models/coupon')
 const excelJS = require('exceljs')
 const banner = require('../models/banner')
-
 const loadAdminLogin = async (req, res) => {
     try {
         if (req.session.admin_id) {
