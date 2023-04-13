@@ -356,8 +356,12 @@ const deleteItem = async (req, res) => {
             res.redirect('/admin/product')
         }
         else {
+        
             res.redirect('/admin/product')
-        }
+       
+    }
+           
+        
 
     } catch (error) {
         res.render('errorPage')
