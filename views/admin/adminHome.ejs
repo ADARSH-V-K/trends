@@ -142,10 +142,11 @@
 				<li>
 					<i class='bx bxs-dollar-circle' ></i>
 					<% let sum=0 %>
+					<% if(typeof orderData!=undefined){ %>
 					<span class="text"><% for(let i=0;i<orderData.length;i++)
 						{ %>
                           <%sum=sum+orderData[i].totalPrice%>
-						<%}%>
+						<%}}%>
 
 						<h3>RS <%=sum %></h3>
 						
