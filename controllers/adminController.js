@@ -68,6 +68,7 @@ const loadAdminHome = async (req, res) => {
         const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
         const orderData = await order.find({}).populate('customer', 'product')
         const userData = await User.find({})
+        console.log(userData);
 
         res.render('adminHome', { orderData, userData, options })
     } catch (error) {
@@ -452,9 +453,21 @@ const viewOrderDetails = async (req, res) => {
 const viewOrderUpdatedDetails = async (req, res) => {
     try {
         const id = req.body.id
+
+
+
     
         const orderData = await order.updateOne({ _id: id }, { $set: { paymentStatus: req.body.paymentStatus, orderStatus: req.body.orderStatus } }).populate('product.productId')
-
+        const ordData=await order.findOne({_id:id})
+        const userData=await User.findOne({_id:ordData.user})
+        
+        if(ordData.orderStatus=='Refund'){
+            userData.wallet=userData.wallet+ordData.totalPrice
+            userData.save()
+        }
+{
+    
+}
         res.redirect('/admin/getOrder')
 
 

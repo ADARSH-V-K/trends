@@ -133,7 +133,9 @@
 				<li>
 					<i class='bx bxs-group' ></i>
 					<span class="text">
+						<% if(typeof userData!="undefined") {%>
 						<h3><%=userData.length%></h3>
+						<% } %>
 						<p>Visitors</p>
 					</span>
 				</li>

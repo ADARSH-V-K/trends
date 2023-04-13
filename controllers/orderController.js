@@ -2,6 +2,7 @@ const Order = require("../models/order")
 const cart = require("../models/cart");
 const products = require("../models/products");
 const order = require("../models/order")
+const User=require("../models/userModel")
 const Razorpay=require("razorpay")
 const orderPlaced = async (req, res) => {
     try {
@@ -32,9 +33,16 @@ const orderPage = async (req, res) => {
 const cancelOrder = async (req,res)=>{
     try {
          const id = req.query.id;
+
+
    
         const ord = await order.findByIdAndUpdate({_id:id},{$set:{
             orderStatus:"Cancelled"}})
+          if(ord.paymentMethod== 'Razor-Pay'){
+            const userData=await User.findOne({_id:req.session.user_id})
+             userData.wallet =userData.wallet+ord.totalPrice
+             userData.save()
+          }
            
             res.redirect('/myOrders')
 
