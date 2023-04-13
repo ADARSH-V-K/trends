@@ -366,7 +366,7 @@ const getCart = async (req, res) => {
             }
 
             else {
-                res.render('cart', {   count,userCart,message })
+                res.render('cart', {  count,userCart })
             }
         }
         else {
