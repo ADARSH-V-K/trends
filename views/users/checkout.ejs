@@ -32,25 +32,25 @@
             <div>
               <h6 class="my-0"><%=findCart.product[i].name%>x<%= findCart.product[i].quantity %></h6>
             </div>
-            <span class="text-muted"><%=findCart.product[i].price*findCart.product[i].quantity%></span>
+            <span class="text-muted">&#x20b9;<%=findCart.product[i].price*findCart.product[i].quantity%></span>
           </li>
           <% }%>
           <li class="list-group-item d-flex justify-content-between lh-condensed">
             <div>
             <h6 class="my-0" >subtotal </h6>
           </div>
-          <span class="text-muted" id="subtotal"><%= findCart.totalPrice %></span>
+          <span class="text-muted" id="subtotal">&#x20b9;<%= findCart.totalPrice %></span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-condensed">
             <div>
             <h6 class="my-0" id="">discount Price </h6>
           </div>
-          <span class="text-muted" id="discountAmount"><%= findCart.discountAmount %></span>
+          <span class="text-muted" id="discountAmount"><% if(findCart.discountAmount) {%>&#x20b9<% } %><%= findCart.discountAmount %></span>
           </li>
           
           <div class="d-flex my-2 justify-content-between">
           <h6 class="my-0 ms-3" >TOTAL</h6>
-          <H6 class="me-3" id="total"><%=findCart.totalPrice-findCart.discountPrice%></H6>
+          <H6 class="me-3" id="total">&#x20b9;<%=findCart.totalPrice-findCart.discountPrice%></H6>
           <input type="hidden" id="totalHidden" name="total" value="<%=findCart.totalPrice-findCart.discountPrice%>">
           
           
