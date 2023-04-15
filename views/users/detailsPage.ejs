@@ -53,7 +53,7 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
+							<li >
 								<a href="/">Home</a>
 								
 							</li>
@@ -64,7 +64,7 @@
 
 							
 
-							<li>
+							<li class="active-menu">
 								<a href="/myOrders">My orders</a>
 							</li>
 
@@ -74,6 +74,9 @@
 
 							<li>
 								<a href="/getCart">Cart</a>
+							</li>
+                            <li>
+								<a href="/getProfile">Profile</a>
 							</li>
 						</ul>
 					</div>	
@@ -195,6 +198,9 @@
                                 <a href="/returnOrder?id=<%=orderData._id%>"><button class="btn btn-outline-danger"> Return Order</button></a> 
                                 <%} else if(orderData.orderStatus== "Cancelled"){%>
                             <h6 class="text-danger">Order Cancelled</h6> 
+                            <%} else if(orderData.orderStatus== "Return Approved"){%>
+    
+                                <h6 class="text-danger">Refund Approved</h6> 
                                     <%}else{%><a href="/cancelOrder?id=<%=orderData._id%>"><button class="btn btn-outline-danger"> Cancel Order</button></a><%}%>
                         <table class="table mt-5">
                             <thead>

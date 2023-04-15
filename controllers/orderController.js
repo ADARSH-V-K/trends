@@ -38,7 +38,7 @@ const cancelOrder = async (req,res)=>{
    
         const ord = await order.findByIdAndUpdate({_id:id},{$set:{
             orderStatus:"Cancelled"}})
-          if(ord.paymentMethod== 'Razor-Pay'){
+          if((ord.paymentMethod== 'Razor-Pay')||(ord.paymentMethod=='Wallet Pay')){
             const userData=await User.findOne({_id:req.session.user_id})
              userData.wallet =userData.wallet+ord.totalPrice
              userData.save()
@@ -117,7 +117,7 @@ const orderCreating = async (req, res) => {
       else  if (req.body.paymentMethod ==='Wallet Pay') {
   
         const userData=await User.findById({_id:userId})
-        console.log(userData);
+        
 
         for (let i = 0; i < productDetail.length; i++) {
             let productOne = await products.findById({ _id: productDetail[i].productId })
@@ -135,7 +135,7 @@ const orderCreating = async (req, res) => {
         res.json(response)
         
       } else if (req.body.paymentMethod  === 'Razor-Pay') {
-        console.log("online payment is working");
+        
         
         let instance = new Razorpay({key_id:'rzp_test_XuMLdJaiFzahLX', key_secret:'FryaTv9iDR7T3BvbNlpZyU9W'})
   

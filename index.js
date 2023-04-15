@@ -14,10 +14,6 @@ app.use(function(req,res,next){
     next()
 })
 
-
-//error handling
-const errorHandler = require('./errorHandler')
-
 //for user route
 const userRoute=require('./routes/userRoute')
 app.use('/',userRoute)
