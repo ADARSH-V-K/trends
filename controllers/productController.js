@@ -126,7 +126,7 @@ const couponApply=async (req,res)=>{
    
       if (couponData) {
         const minimum= couponData.minPurchase
-        if (findCart.totalPrice>minimum) {
+        if (findCart.totalPrice>=minimum) {
           const couponType = couponData.discountType
           const discountAmount = couponData.discountAmount
           if (couponData.discountType === 'percentage') {
