@@ -180,9 +180,13 @@
               <input id="debit" name="paymentMethod" type="radio" value="Razor-Pay" class="custom-control-input" required>
               <label class="custom-control-label"  for="debit">Razor Pay</label>
             </div>
-         
-          </div>
           
+          <%if(findCart.totalPrice<=userData.wallet){  %>
+          <div class="custom-control custom-radio">
+            <input id="debit" name="paymentMethod" type="radio" value="Wallet Pay" class="custom-control-input" required>
+            <label class="custom-control-label"  for="debit">Wallet Pay</label>
+          </div><% } %>
+        </div>
           <button class="btn btn-primary btn-lg btn-block" type="submit" >Continue to checkout</button>
         
       </form>

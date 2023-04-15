@@ -113,8 +113,29 @@ const orderCreating = async (req, res) => {
         let response= {status:true}
   
         res.json(response)
-      } else if (req.body.paymentMethod  === 'Razor-Pay') {
+      }
+      else  if (req.body.paymentMethod ==='Wallet Pay') {
+  
+        const userData=await User.findById({_id:userId})
+        console.log(userData);
+
+        for (let i = 0; i < productDetail.length; i++) {
+            let productOne = await products.findById({ _id: productDetail[i].productId })
+            productOne.stock -= cartData.product[i].quantity
+            productOne.save()
+            
+        }
+        userData.wallet-=cartData.totalPrice
+        userData.save()
+        cartData.product = []
+        cartData.totalPrice = 0
+        const newCart = await cartData.save()
+        let response= {status:true}
+  
+        res.json(response)
         
+      } else if (req.body.paymentMethod  === 'Razor-Pay') {
+        console.log("online payment is working");
         
         let instance = new Razorpay({key_id:'rzp_test_XuMLdJaiFzahLX', key_secret:'FryaTv9iDR7T3BvbNlpZyU9W'})
   
@@ -134,7 +155,9 @@ const orderCreating = async (req, res) => {
   
         });
       }
-    } catch (error) {
+    } 
+    
+    catch (error) {
         res.render('404')
       console.log(error.message);
     }
