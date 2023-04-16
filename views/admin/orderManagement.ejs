@@ -17,7 +17,40 @@
 	<!-- Adding datatable cdn -->
 	<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
 
+	<style>.responsive-table {
+		width: 100%;
+		border-collapse: collapse;
+	}
 	
+	.responsive-table th, .responsive-table td {
+		text-align: left;
+		padding: 8px;
+		vertical-align: top;
+		border-bottom: 1px solid #ddd;
+	}
+	
+	.responsive-table th {
+		background-color: #f2f2f2;
+	}
+	
+	@media only screen and (max-width: 600px) {
+		.responsive-table td, .responsive-table th {
+			display: block;
+			text-align: center;
+		}
+		
+		.responsive-table tr {
+			border-bottom: none;
+		}
+		
+		.responsive-table tbody td:before {
+			content: attr(data-label);
+			float: left;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
+	</style>
 
 	
 	<script>
@@ -121,7 +154,7 @@
 						<i class='bx bx-search' ></i>
 						<i class='bx bx-filter' ></i>
 					</div>
-					<table id="orderTable">
+					<table id="orderTable"  class="responsive-table">
 						<thead>
 							<tr>
 								<th>order id</th>
