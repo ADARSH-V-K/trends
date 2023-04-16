@@ -144,7 +144,42 @@
 
 
 		<!-- Menu Mobile -->
-		<div class="menu-mobile">
+		<ul class="main-menu-m">
+			<li><li class="active-menu">
+				<a href="#">Home</a>
+				
+			</li>
+
+			<li>
+				<a href="/shop">Shop</a>
+			</li>
+
+			
+
+			<li>
+				<a href="/myOrders">My orders</a>
+			</li>
+
+			<li>
+				<a href="/getWishList">Wishlist</a>
+			</li>
+
+			<li>
+				<a href="/getCart">Cart</a>
+			</li>
+			<li>
+				<a href="/getProfile">Profile</a>
+			</li>
+			<li>
+				<%if(typeof userData !== 'undefined'){%>
+					<a href="/userLogout" style="color: black;font-weight: bold;">Logout</a>
+				<%}else{%>
+					<a href="/login" style="color: black;font-weight: bold;">LogIn</a>
+
+				<%}%>
+			</li>
+		</ul>
+		<!-- <div class="menu-mobile">
 			<ul class="topbar-mobile">
 				<li>
 					<div class="left-top-bar">
@@ -206,7 +241,7 @@
 					<a href="contact.html">Contact</a>
 				</li>
 			</ul>
-		</div>
+		</div> -->
 
 		<!-- Modal Search -->
 		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">

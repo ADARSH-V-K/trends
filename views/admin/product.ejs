@@ -14,12 +14,7 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
 	<!-- Adding datatable cdn -->
-	<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-	
-
-	
-
-	
+	<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>	
 	<script>
 		$(document).ready(function () {
       $('#productTable').DataTable();
@@ -44,7 +39,7 @@
 					<span class="text">Dashboard</span>
 				</a>
 			</li>
-			<li class="'bx bxs-shopping-bag-alt'">
+			<li >
 				<a href="User">
 					<i class='bx bxs-shopping-bag-alt' ></i>
 					<span class="text">User Management</span>
@@ -117,13 +112,13 @@
 			</div>
 
 		
-			<div class="table-data">
+			<div class="table-data"  class="table-responsive">
 				<div class="order">
 					<div class="head">
 					
 						<i class='bx bx-search' ></i>
 						<i class='bx bx-filter' ></i>
-					</div>
+					</div >
 					<table id="productTable">
 						<thead>
 							<tr>
