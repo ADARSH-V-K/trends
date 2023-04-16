@@ -129,38 +129,47 @@
 				</span>
 			</div>
 		</div>
+        <div class="menu-mobile">
+            <ul class="main-menu-m">
+                <li><li class="active-menu">
+                    <a href="/">Home</a>
+                    
+                </li>
+    
+                <li>
+                    <a href="/shop">Shop</a>
+                </li>
+    
+                
+    
+                <li>
+                    <a href="/myOrders">My orders</a>
+                </li>
+    
+                <li>
+                    <a href="/getWishList">Wishlist</a>
+                </li>
+    
+                <li>
+                    <a href="/getCart">Cart</a>
+                </li>
+                <li>
+                    <a href="/getProfile">Profile</a>
+                </li>
+                <li>
+                    <%if(typeof userData !== 'undefined'){%>
+                        <a href="/userLogout" style="color: black;font-weight: bold;">Logout</a>
+                    <%}else{%>
+                        <a href="/login" style="color: black;font-weight: bold;">LogIn</a>
+    
+                    <%}%>
+                </li>
+            </ul>
+            </div>
 
 
 		<!-- Menu Mobile -->
-		<div class="menu-mobile">
-			<ul class="topbar-mobile">
-				<li>
-					<div class="left-top-bar">
-						Free shipping for standard order over $100
-					</div>
-				</li>
-
-				<li>
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Help & FAQs
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							My Account
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							EN
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							USD
-						</a>
-					</div>
-				</li>
-			</ul>
-
+	
 			
 
 		<!-- Modal Search -->
